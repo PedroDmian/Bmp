@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  devcontainer:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    command: sleep infinity
+    volumes:
+      - ..:/workspace:cached
+    networks:
+      - dev-net
+
+networks:
+  dev-net:
+    external: true

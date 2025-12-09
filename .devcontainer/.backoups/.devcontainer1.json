@@ -1,0 +1,43 @@
+{
+  "name": "bmp-dev",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "."
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "ms-azuretools.vscode-docker",
+        "ms-vscode.azurecli",
+        "eamodio.gitlens",
+        "hsnazar.hyper-term-theme",
+				"christian-kohler.path-intellisense",
+				"alefragnani.Bookmarks",
+				"aaron-bond.better-comments",
+				"funkyremi.vscode-google-translate",
+				"ms-dotnettools.vscode-dotnet-pack",
+				"donjayamanne.githistory"
+      ],
+      "settings": {
+        "editor.tabSize": 4
+      }
+    }
+  },
+  "workspaceFolder": "/bmp",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/bmp,type=bind,consistency=cached",
+  "forwardPorts": [5000, 5001],
+  "postCreateCommand": "dotnet dev-certs https --trust || true",
+  "remoteUser": "vscode",
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash",
+    "dotnet.defaultSolution": "**/*.sln",
+    "files.exclude": {
+      "**/bin": true,
+      "**/obj": true
+    }
+  }
+}

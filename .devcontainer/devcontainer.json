@@ -1,0 +1,39 @@
+{
+  "name": "BMP Dev Container",
+  "dockerComposeFile": [
+    "docker-compose-silicon.yml"
+  ],
+  "service": "devcontainer",
+  "context": "..",
+  "remoteUser": "root",
+  "runArgs": [
+    "--mount", "type=volume,source=bmp-dotnet,target=/root/.aspnet",
+    "--mount", "type=volume,source=bmp-nuget,target=/root/.nuget"
+  ],
+  "postCreateCommand": "dotnet tool restore",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "ms-azuretools.vscode-docker",
+        "formulahendry.dotnet-test-explorer",
+        "eamodio.gitlens",
+        "ms-vscode.azurecli",
+        "hsnazar.hyper-term-theme",
+				"christian-kohler.path-intellisense",
+				"alefragnani.Bookmarks",
+				"aaron-bond.better-comments",
+				"funkyremi.vscode-google-translate",
+				"ms-dotnettools.vscode-dotnet-pack",
+				"donjayamanne.githistory"
+      ],
+      "settings": {
+        "editor.tabSize": 4
+      }
+    }
+  },
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/bmp-workspace,type=bind,consistency=cached"
+  ],
+  "workspaceFolder": "/bmp-workspace"
+}

@@ -1,0 +1,7 @@
+Solution: Bmp.sln
+
+/Bmp.Api -> Proyecto Web API (ASP.NET Core minimal APIs o Controllers, Middlewares)
+/Bmp.Application -> Casos de uso, DTOs, Interfaces de dominio
+/Bmp.Domain -> Entidades, ValueObjects, Reglas de negocio, excepciones de dominio
+/Bmp.Infrastructure -> Entity Framework Core, implementaciones de repositorio, configuraciones de persistencia
+/tests/ -> proyectos de pruebas (unit, integration)
