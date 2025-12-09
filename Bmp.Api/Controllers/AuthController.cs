@@ -2,10 +2,8 @@ using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 
-using Bmp.Application.Interfaces;
 using Bmp.Application.DTOs;
 using Bmp.Application.UseCase;
-using Bmp.Domain.Repositories;
 using Bmp.Api.Responses;
 using Microsoft.AspNetCore.Authorization;
 

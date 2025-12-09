@@ -1,34 +1,20 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 using Bmp.Api.Middlewares;
-using Bmp.Infrastructure.Persistence;
-using Bmp.Infrastructure.Repositories;
-using Bmp.Infrastructure.Jwt;
-using Bmp.Application.Interfaces;
-using Bmp.Application.UseCase;
-using Bmp.Domain.Repositories;
+using Bmp.Infrastructure;
+using Bmp.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+// Add layers
+builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication();
 
 // Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-
-// ? Dependency Injection
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
-
-// ? Use Cases
-builder.Services.AddScoped<CreateUserUseCase>();
-builder.Services.AddScoped<AuthTokenUseCase>();
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
