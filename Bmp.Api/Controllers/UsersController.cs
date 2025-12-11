@@ -2,9 +2,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-using Bmp.Application.UseCase;
 using Bmp.Api.Responses;
+using Bmp.Application.UseCase;
 using Bmp.Application.DTOs;
+using Bmp.Domain.Exceptions;
 
 namespace Bmp.Api.Controllers
 {
@@ -14,10 +15,14 @@ namespace Bmp.Api.Controllers
     public class UsersController : ControllerBase
     {
         private readonly GetUsersUseCase _getUsersUseCase;
+        private readonly GetUserByIdUseCase _getUserByIdUseCase;
 
-        public UsersController(GetUsersUseCase getUsersUseCase)
-        {
+        public UsersController(
+            GetUsersUseCase getUsersUseCase,
+            GetUserByIdUseCase getUserByIdUseCase
+        ) {
             _getUsersUseCase = getUsersUseCase;
+            _getUserByIdUseCase = getUserByIdUseCase;
         }
 
         [HttpGet]
@@ -32,6 +37,34 @@ namespace Bmp.Api.Controllers
                     message: "Users retrieved successfully"
                 ));   
             } 
+            catch(Exception ex)
+            {
+                return StatusCode(500, ApiResponse<object>.ErrorResponse(
+                    ex.Message,
+                    errorCode: 1000
+                ));
+            }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            try
+            {
+                var response = await _getUserByIdUseCase.Execute(id);
+                
+                return Ok(ApiResponse<GetUserByIdResponse>.SuccessResponse(
+                    response,
+                    message: "User retrieved successfully"
+                ));   
+            } 
+            catch(UserNotFoundException ex)
+            {
+                return NotFound(ApiResponse<object>.ErrorResponse(
+                    ex.Message,
+                    errorCode: 1206
+                ));
+            }
             catch(Exception ex)
             {
                 return StatusCode(500, ApiResponse<object>.ErrorResponse(

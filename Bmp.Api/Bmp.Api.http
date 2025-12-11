@@ -4,4 +4,8 @@
 GET {{Bmp.Api_HostAddress}}/api/Users
 Accept: */*
 
+### Get user by ID
+GET {{Bmp.Api_HostAddress}}/api/Users/d8d6995c-842d-4fa6-9271-312de86a2ac3
+Accept: */*
+
 ###
