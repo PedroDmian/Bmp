@@ -1,6 +1,7 @@
 @Bmp.Api_HostAddress = http://localhost:5010
 
-GET {{Bmp.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+### Get all users
+GET {{Bmp.Api_HostAddress}}/api/Users
+Accept: */*
 
 ###

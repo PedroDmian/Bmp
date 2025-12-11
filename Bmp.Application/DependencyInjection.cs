@@ -10,6 +10,7 @@ public static class DependencyInjection
         // Use Cases
         services.AddScoped<CreateUserUseCase>();
         services.AddScoped<AuthTokenUseCase>();
+        services.AddScoped<GetUsersUseCase>();
 
         return services;
     }
