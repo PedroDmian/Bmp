@@ -15,7 +15,7 @@ public class AuthTokenUseCase
         _jwtService = jwtService;
     }
 
-    public async Task<AuthResponse> execute(AuthRequest authRequest)
+    public async Task<AuthResponse> Execute(AuthRequest authRequest)
     {
         var find = await _userRepository.GetByEmailAsync(authRequest.Email);
 

@@ -39,7 +39,7 @@ public class AuthController : ControllerBase
             );
             userRequest = userRequest with { Password = hash };
 
-            var response = await _createUserUseCase.execute(userRequest);
+            var response = await _createUserUseCase.Execute(userRequest);
             
             return Ok(ApiResponse<CreateUserResponse>.SuccessResponse(
                 response,
@@ -78,7 +78,7 @@ public class AuthController : ControllerBase
             );
             authRequest = authRequest with { Password = hash };
 
-            var response = await _authTokenUseCase.execute(authRequest);
+            var response = await _authTokenUseCase.Execute(authRequest);
             
             return Ok(ApiResponse<AuthResponse>.SuccessResponse(
                 response,

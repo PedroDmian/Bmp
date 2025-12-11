@@ -13,7 +13,7 @@ public class CreateUserUseCase
         _userRepository = userRepository;
     }
 
-    public async Task<CreateUserResponse> execute(CreateUserRequest userRequest)
+    public async Task<CreateUserResponse> Execute(CreateUserRequest userRequest)
     {
         var existing = await _userRepository.GetByEmailAsync(userRequest.Email);
 
