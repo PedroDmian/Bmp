@@ -16,13 +16,16 @@ namespace Bmp.Api.Controllers
     {
         private readonly GetUsersUseCase _getUsersUseCase;
         private readonly GetUserByIdUseCase _getUserByIdUseCase;
+        private readonly UpdateUserUseCase _updateUserUseCase;
 
         public UsersController(
             GetUsersUseCase getUsersUseCase,
-            GetUserByIdUseCase getUserByIdUseCase
+            GetUserByIdUseCase getUserByIdUseCase,
+            UpdateUserUseCase updateUserUseCase
         ) {
             _getUsersUseCase = getUsersUseCase;
             _getUserByIdUseCase = getUserByIdUseCase;
+            _updateUserUseCase = updateUserUseCase;
         }
 
         [HttpGet]
@@ -56,6 +59,34 @@ namespace Bmp.Api.Controllers
                 return Ok(ApiResponse<GetUserByIdResponse>.SuccessResponse(
                     response,
                     message: "User retrieved successfully"
+                ));   
+            } 
+            catch(UserNotFoundException ex)
+            {
+                return NotFound(ApiResponse<object>.ErrorResponse(
+                    ex.Message,
+                    errorCode: 1206
+                ));
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, ApiResponse<object>.ErrorResponse(
+                    ex.Message,
+                    errorCode: 1000
+                ));
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromBody] UpdateUserRequest updateUserRequest, Guid id)
+        {
+            try
+            {
+                var response = await _updateUserUseCase.Execute(updateUserRequest, id);
+
+                return Ok(ApiResponse<UpdateUserResponse>.SuccessResponse(
+                    response,
+                    message: "User updated successfully"
                 ));   
             } 
             catch(UserNotFoundException ex)

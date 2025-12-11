@@ -23,4 +23,17 @@ public class UserRepository : IUserRepository
     public async Task AddAsync(User user) => await _context.Users.AddAsync(user);
 
     public async Task SaveChangesAsync() => await _context.SaveChangesAsync();
+
+    public async Task<User> UpdateAsync(User user)
+    {
+        await _context.Users
+            .Where(u => u.Id == user.Id)
+            .ExecuteUpdateAsync(setters => setters
+                .SetProperty(u => u.FirstName, user.FirstName)
+                .SetProperty(u => u.LastName, user.LastName)
+                .SetProperty(u => u.Image, user.Image)
+            );
+
+        return user;
+    }
 }
