@@ -36,4 +36,18 @@ public class UserRepository : IUserRepository
 
         return user;
     }
+
+    public async Task DeleteAsync(Guid id)
+    {
+        var user = await GetByIdAsync(id);
+
+        if (user != null)
+        {
+            user.DeletedAt = DateTime.UtcNow;
+
+            _context.Users.Update(user);
+
+            await SaveChangesAsync();
+        }
+    }
 }

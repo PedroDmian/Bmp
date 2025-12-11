@@ -17,15 +17,18 @@ namespace Bmp.Api.Controllers
         private readonly GetUsersUseCase _getUsersUseCase;
         private readonly GetUserByIdUseCase _getUserByIdUseCase;
         private readonly UpdateUserUseCase _updateUserUseCase;
+        private readonly DeleteUserUseCase _deleteUserUseCase;
 
         public UsersController(
             GetUsersUseCase getUsersUseCase,
             GetUserByIdUseCase getUserByIdUseCase,
-            UpdateUserUseCase updateUserUseCase
+            UpdateUserUseCase updateUserUseCase,
+            DeleteUserUseCase deleteUserUseCase
         ) {
             _getUsersUseCase = getUsersUseCase;
             _getUserByIdUseCase = getUserByIdUseCase;
             _updateUserUseCase = updateUserUseCase;
+            _deleteUserUseCase = deleteUserUseCase;
         }
 
         [HttpGet]
@@ -88,6 +91,34 @@ namespace Bmp.Api.Controllers
                     response,
                     message: "User updated successfully"
                 ));   
+            } 
+            catch(UserNotFoundException ex)
+            {
+                return NotFound(ApiResponse<object>.ErrorResponse(
+                    ex.Message,
+                    errorCode: 1206
+                ));
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, ApiResponse<object>.ErrorResponse(
+                    ex.Message,
+                    errorCode: 1000
+                ));
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            try
+            {
+                await _deleteUserUseCase.Execute(id);
+
+                return Ok(ApiResponse<object>.SuccessResponse(
+                    null,
+                    message: "User deleted successfully"
+                ));
             } 
             catch(UserNotFoundException ex)
             {

@@ -19,4 +19,8 @@ Content-Type: application/json
   "image": "https://www.drivetest.de/wp-content/uploads/2019/08/drivetest-avatar-m.png"
 }
 
+### Delete user
+DELETE {{Bmp.Api_HostAddress}}/api/Users/d8d6995c-842d-4fa6-9271-312de86a2ac3
+Accept: */*
+
 ###
